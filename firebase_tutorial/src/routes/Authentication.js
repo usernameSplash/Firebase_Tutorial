@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { authService } from "FirebaseInstance";
 
 const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [newAccount, setNewAccouont] = useState(true);
 
     const onChange = (event) => {
         const {
@@ -14,8 +16,25 @@ const Auth = () => {
             setPassword(value);
         }
     };
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
+        try {
+            let data;
+            if (newAccount) {
+                data = await authService.createUserWithEmailAndPassword(
+                    email,
+                    password,
+                );
+            } else {
+                data = await authService.signInWithEmailAndPassword(
+                    email,
+                    password,
+                );
+            }
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -23,7 +42,7 @@ const Auth = () => {
             <form onSubmit={onSubmit}>
                 <input
                     name='email'
-                    type='text'
+                    type='email'
                     placeholder='Email'
                     required
                     value={email}
@@ -37,7 +56,10 @@ const Auth = () => {
                     value={password}
                     onChange={onChange}
                 />
-                <input type='submit' value='Log In' />
+                <input
+                    type='submit'
+                    value={newAccount ? "Create Account" : "Log In"}
+                />
             </form>
 
             <div class='oauth'>
