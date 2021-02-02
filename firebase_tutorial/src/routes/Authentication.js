@@ -5,6 +5,7 @@ const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [newAccount, setNewAccouont] = useState(true);
+    const [error, setError] = useState("");
 
     const onChange = (event) => {
         const {
@@ -33,7 +34,7 @@ const Auth = () => {
             }
             console.log(data);
         } catch (error) {
-            console.log(error.message);
+            setError(error.message);
         }
     };
 
@@ -60,6 +61,7 @@ const Auth = () => {
                     type='submit'
                     value={newAccount ? "Create Account" : "Log In"}
                 />
+                {error}
             </form>
 
             <div className='oauth'>
