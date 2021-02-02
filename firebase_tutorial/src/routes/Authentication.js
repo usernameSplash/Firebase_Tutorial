@@ -33,7 +33,7 @@ const Auth = () => {
             }
             console.log(data);
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
     };
 
@@ -62,7 +62,7 @@ const Auth = () => {
                 />
             </form>
 
-            <div class='oauth'>
+            <div className='oauth'>
                 <button>Continue with Google</button>
                 <button>Continue with Github</button>
             </div>
